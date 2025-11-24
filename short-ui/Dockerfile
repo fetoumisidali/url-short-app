@@ -12,18 +12,22 @@ RUN npm install
 # Copy project files
 COPY . .
 
-# Build the Vue app
+# Build the Vue app for production
 RUN npm run build
 
-# Production stage
-FROM nginx:alpine as production-stage
+# Production stage - serve with simple HTTP server
+FROM node:22.17.0-alpine as production-stage
+
+WORKDIR /app
+
+# Install serve (lightweight static file server)
+RUN npm install -g serve
 
 # Copy built files from build stage
-COPY --from=build-stage /app/dist /usr/share/nginx/html
+COPY --from=build-stage /app/dist ./dist
 
-# Copy custom nginx config
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Expose port (will be mapped to unique port by docker-compose)
+EXPOSE 3000
 
-EXPOSE 80
-
-CMD ["nginx", "-g", "daemon off;"]
+# Serve the static files
+CMD ["serve", "-s", "dist", "-l", "3000"]
