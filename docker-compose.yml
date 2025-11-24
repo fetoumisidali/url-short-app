@@ -1,0 +1,13 @@
+services:
+  # The Frontend Service (Vue + Nginx)
+  frontend:
+    build: ./short-ui
+    ports:
+      - "80:80"
+    restart: always
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
