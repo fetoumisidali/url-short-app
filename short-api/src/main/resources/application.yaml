@@ -1,5 +1,5 @@
 spring:
   application:
     name: url-shorter
-app:
-  url: ${APP_URL}
+  profiles:
+    active: ${ACTIVE_PROFILE}

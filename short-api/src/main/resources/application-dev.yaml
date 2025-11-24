@@ -1,2 +1,4 @@
 app:
-  url: http://localhost:8080
+  url: ${APP_URL}
+  front: ${FRONT_URL}
+  url-suffix: ${URL_SUFFIX}

@@ -19,15 +19,16 @@ public class UrlServiceImpl implements UrlService{
     private static final String CHARS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     final static int SHORT_ID_LENGTH = 4;
     private final String APP_URL;
-    private static final String SHORT_URL_SUFFIX = "/api/v1/shorter/";
+    private final String SHORT_URL_SUFFIX;
     private static final SecureRandom RANDOM = new SecureRandom();
 
     private static final Logger log = LoggerFactory.getLogger(UrlServiceImpl.class);
 
     private final UrlRepository urlRepository;
 
-    public UrlServiceImpl(@Value("${app.url}") String appUrl, UrlRepository urlRepository) {
+    public UrlServiceImpl(@Value("${app.url}") String appUrl,@Value("${app.url-suffix}") String urlSuffix, UrlRepository urlRepository) {
         APP_URL = appUrl;
+        SHORT_URL_SUFFIX = urlSuffix;
         this.urlRepository = urlRepository;
     }
 
