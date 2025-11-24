@@ -2,7 +2,6 @@ app:
   url: ${APP_URL}
   front: ${FRONT_URL}
   url-suffix: ${URL_SUFFIX}
-spring:
-  data:
-    mongodb:
-      uri: {$SPRING_DATA_MONGODB_URI}
+data:
+  mongodb:
+  uri: {$SPRING_DATA_MONGODB_URI}
