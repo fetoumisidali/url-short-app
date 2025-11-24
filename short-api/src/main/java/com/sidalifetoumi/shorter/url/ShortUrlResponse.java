@@ -5,13 +5,10 @@ package com.sidalifetoumi.shorter.url;
     @Created 11/23/2025
 */
 
+import org.springframework.beans.factory.annotation.Value;
+
 public record ShortUrlResponse (
         String shortUrl
 )
 {
-    private static final String APP_BASE_URL = "http://localhost:8080/api/v1/shorter/";
-
-    public ShortUrlResponse(String shortUrl){
-        this.shortUrl = APP_BASE_URL + shortUrl;
-    }
 }
