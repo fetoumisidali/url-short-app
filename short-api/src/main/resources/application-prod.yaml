@@ -7,4 +7,6 @@ spring:
     mongodb:
       host: mongodb
       port: 27017
-      database: shortener
+      database: ${MONGO_DATABASE}
+      username: ${MONGO_USERNAME}
+      password: ${MONGO_PASSWORD}

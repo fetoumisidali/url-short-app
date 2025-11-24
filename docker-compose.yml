@@ -3,6 +3,12 @@ services:
     image: mongo:8.0
     container_name: mongodb
     restart: unless-stopped
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}}
+      - MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+      - MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE}
+    ports:
+      - "27017:27017"
     volumes:
       - mongo_data:/data/db
     networks:
@@ -18,8 +24,7 @@ services:
     ports:
       - "8081:8080" 
     environment:
-      - SPRING_DATA_MONGODB_URI=mongodb://mongodb:27017/shortener
-      - ACTIVE_PROFILE=prod
+      - ACTIVE_PROFILE=${ACTIVE_PROFILE}
       - APP_URL=http://your-domain.com
       - FRONT_URL=http://your-domain.com
       - URL_SUFFIX=u
