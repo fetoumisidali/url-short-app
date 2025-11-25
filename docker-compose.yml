@@ -1,12 +1,12 @@
 services:
   mongodb:
     image: mongo:latest
-    container_name: mongodb
+    container_name: short-data
     restart: unless-stopped
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
-      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
-      - MONGO_INITDB_DATABASE=${MONGO_INITDB_DATABASE}
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+      MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE}
     ports:
       - "27017:27017"
     volumes:
@@ -24,22 +24,25 @@ services:
     ports:
       - "8081:8080" 
     environment:
-      - MONGO_USER=${MONGO_INITDB_ROOT_USERNAME}
-      - MONGO_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
-      - MONGO_DATABASE=${MONGO_INITDB_DATABASE}
-      - ACTIVE_PROFILE=${ACTIVE_PROFILE}
-      - MONGO_HOST=mongodb
-      - APP_URL=http://your-domain.com
-      - FRONT_URL=http://your-domain.com
-      - URL_SUFFIX=u
+      MONGO_URI: mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@mongodb:27017/${MONGO_INITDB_DATABASE}?authSource=admin
+      MONGO_USER: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+      MONGO_DATABASE: ${MONGO_INITDB_DATABASE}
+      ACTIVE_PROFILE: ${ACTIVE_PROFILE}
+      APP_URL: ${APP_URL}
+      FRONT_URL: ${FRONT_URL}
+      URL_SUFFIX: u
     networks:
       - short-network
 
   frontend:
     build:
       context: ./short-ui
+      args:
+        VITE_API_URL: ${VITE_API_URL}
     container_name: short-ui
     restart: unless-stopped
+    
     depends_on:
       - backend
     ports:
