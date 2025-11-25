@@ -28,6 +28,7 @@ services:
       - MONGO_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
       - MONGO_DATABASE=${MONGO_INITDB_DATABASE}
       - ACTIVE_PROFILE=${ACTIVE_PROFILE}
+      - MONGO_HOST=mongodb
       - APP_URL=http://your-domain.com
       - FRONT_URL=http://your-domain.com
       - URL_SUFFIX=u
