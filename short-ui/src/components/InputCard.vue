@@ -30,7 +30,9 @@ const createShortUrlMutation = useCreateShortUrl()
 function handleSubmit() {
     if(getExistOriginalUrl(form.url)) return;
     createShortUrlMutation.mutate(form, {
-        onError: () => {
+        onError: (error) => {
+            console.log(error)
+            console.log(error.message)
             console.log("something wrong")
         },
         onSuccess: (data) => {
