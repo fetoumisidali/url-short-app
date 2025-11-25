@@ -1,6 +1,8 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import type { Url } from "../types/url";
+import { v4 as uuidv4 } from 'uuid';
+
 
 export const useShortUrlStore = defineStore(
   "shortUrl",
@@ -21,7 +23,7 @@ export const useShortUrlStore = defineStore(
     function addUrl(shortUrl: string, originalUrl: string) {
       if (!getExistingUrl(shortUrl, originalUrl)) {
         shortUrls.value.unshift({
-          id: crypto.randomUUID(),
+          id: uuidv4(),
           shortUrl,
           originalUrl,
         });
