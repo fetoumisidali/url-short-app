@@ -3,11 +3,12 @@ spring:
     activate:
       on-profile: prod
   data:
-    host: ${MONGO_HOST}
-    port: 27017
-    database: ${MONGO_DATABASE}
-    username: ${MONGO_USER}
-    password: ${MONGO_PASSWORD}
+    mongodb:
+      host: ${MONGO_HOST}
+      port: 27017
+      database: ${MONGO_DATABASE}
+      username: ${MONGO_USER}
+      password: ${MONGO_PASSWORD}
 
 app:
   url: ${APP_URL}
