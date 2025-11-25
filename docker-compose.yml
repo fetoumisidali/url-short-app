@@ -31,7 +31,7 @@ services:
       ACTIVE_PROFILE: ${ACTIVE_PROFILE}
       APP_URL: ${APP_URL}
       FRONT_URL: ${FRONT_URL}
-      URL_SUFFIX: u
+      URL_SUFFIX: ${URL_SUFFIX}
     networks:
       - short-network
 
