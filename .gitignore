@@ -1,4 +1,4 @@
 guide
 .env
-.idea
-.factory
+.idea/
+.factory/
