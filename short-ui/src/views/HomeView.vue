@@ -1,5 +1,4 @@
 <template>
-
     <div class="py-12 px-4 max-w-4xl mx-auto">
        <Header />
        <InputCard />
