@@ -30,9 +30,15 @@ export const useShortUrlStore = defineStore(
       }
     }
 
+    function deleteUrl(id: string) {
+      shortUrls.value = shortUrls.value.filter((url) => url.id !== id);
+    }
+
+
     return {
       shortUrls,
       addUrl,
+      deleteUrl,
       getExistOriginalUrl
     };
   },
