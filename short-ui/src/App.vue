@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import HomeView from './views/HomeView.vue';
 
 </script>
 
 <template>
-  <div class="min-h-screen w-full">
-    <HomeView />
-  </div>
+  <UApp>
+    <div class="min-h-screen w-full">
+      <RouterView />
+    </div>
+  </UApp>
 </template>
