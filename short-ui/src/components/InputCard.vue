@@ -4,7 +4,7 @@
             <div class="flex gap-3">
                 <UInput color="secondary" v-model="form.url" type="text" placeholder="Enter you URL here" class="w-full"
                     :ui="{ base: 'h-14 px-3 py-2' }" />
-                <UButton color="secondary" type="submit" class="px-8 text-lg"
+                <UButton :disabled="!form.url.trim()" color="secondary" type="submit" class="px-8 text-lg"
                     :loading="createShortUrlMutation.isPending.value" trailing>
                     Short
                 </UButton>
@@ -18,10 +18,11 @@
 import { reactive } from 'vue';
 import { useCreateShortUrl } from '../query/url.query';
 import { useShortUrlStore } from '../stores/url.store';
+import { urlSchema, type UrlFormData } from '../schema/url.schema';
 
 const { addUrl, getExistOriginalUrl } = useShortUrlStore()
 
-const form = reactive({
+const form = reactive<UrlFormData>({
     url: ''
 })
 
@@ -29,6 +30,16 @@ const createShortUrlMutation = useCreateShortUrl()
 const toast = useToast()
 
 function handleSubmit() {
+    const result = urlSchema.safeParse(form)
+    if(!result.success){
+        toast.add({
+            title:"Invalid URL",
+            description:"please enter a valid url",
+            icon:"i-lucide-alert-circle",
+            color:"error"
+        })
+        return;
+    }
     if (getExistOriginalUrl(form.url)) {
         toast.add({
             title:"Url already exists",
