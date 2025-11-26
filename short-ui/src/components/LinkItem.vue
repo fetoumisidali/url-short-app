@@ -16,7 +16,6 @@
                         </ULink>
                     </div>
                 </div>
-
                 <UButton color="neutral" variant="outline" class="h-10 w-10 flex items-center justify-center"
                     @click="handleCopy(url.shortUrl, url.id)" :tooltip="copiedId === url.id ? 'Copied!' : 'Copy Link'">
                     <Check v-if="copiedId === url.id" class="w-4 h-4 text-green-500" />
@@ -35,15 +34,11 @@
 import { Check, Copy, Trash } from 'lucide-vue-next';
 import { ref } from 'vue';
 import { useShortUrlStore } from '../stores/url.store';
+import type { Url } from '../types/url';
 
 const copiedId = ref<string | null>(null);
-
-interface url {
-    originalUrl: string,
-    shortUrl: string,
-    id: string
-}
- defineProps<{url:url}>()
+const { deleteUrl } = useShortUrlStore()
+defineProps<{ url: Url }>()
 
 const handleCopy = async (shortened: string, id: string) => {
     try {
@@ -57,11 +52,10 @@ const handleCopy = async (shortened: string, id: string) => {
     }
 };
 
-const handleDelete = (id:string) => {
+const handleDelete = (id: string) => {
     deleteUrl(id)
 }
 
-const { deleteUrl } = useShortUrlStore()
 
 </script>
 

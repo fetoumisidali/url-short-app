@@ -5,7 +5,7 @@
                 <UInput color="secondary" v-model="form.url" type="text" placeholder="Enter you URL here" class="w-full"
                     :ui="{ base: 'h-14 px-3 py-2' }" />
                 <UButton :disabled="!form.url.trim()" color="secondary" type="submit" class="px-8 text-lg"
-                    :loading="createShortUrlMutation.isPending.value" trailing>
+                    :loading="isPending" trailing>
                     Short
                 </UButton>
             </div>
@@ -15,66 +15,9 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive } from 'vue';
-import { useCreateShortUrl } from '../query/url.query';
-import { useShortUrlStore } from '../stores/url.store';
-import { urlSchema, type UrlFormData } from '../schema/url.schema';
 
-const { addUrl, getExistOriginalUrl } = useShortUrlStore()
+import { useUrlForm } from "../composables/useUrlForm";
 
-const form = reactive<UrlFormData>({
-    url: ''
-})
-
-const createShortUrlMutation = useCreateShortUrl()
-const toast = useToast()
-
-function handleSubmit() {
-    const result = urlSchema.safeParse(form)
-    if(!result.success){
-        toast.add({
-            title:"Invalid URL",
-            description:"please enter a valid url",
-            icon:"i-lucide-alert-circle",
-            color:"error"
-        })
-        return;
-    }
-    if (getExistOriginalUrl(form.url)) {
-        toast.add({
-            title:"Url already exists",
-            description:"the url you enter is already exists",
-            icon:"i-lucide-info",
-            color:"info"
-        })
-        return;
-    };
-    createShortUrlMutation.mutate(form, {
-        onError: (error) => {
-            toast.add({
-                title: 'Something went wrong',
-                description: "please try again later",
-                icon:"i-lucide-shield-x",
-                color:"error"
-            })
-            console.log(error)
-            console.log(error.message)
-            console.log("something wrong")
-        },
-        onSuccess: (data) => {
-            console.log(data)
-            addUrl(
-                data.shortUrl,
-                form.url
-            )
-            form.url = ''
-            toast.add({
-                title:"Success",
-                description:"Your short url has been created successfully",
-                icon:"i-lucide-badge-check",
-            })
-        }
-    })
-}
+const { form, handleSubmit, isPending } = useUrlForm();
 
 </script>
