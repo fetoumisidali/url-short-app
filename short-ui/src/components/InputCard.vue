@@ -57,6 +57,11 @@ function handleSubmit() {
                 form.url
             )
             form.url = ''
+            toast.add({
+                title:"Success",
+                description:"Your short url has been created successfully",
+                icon:"i-lucide-badge-check",
+            })
         }
     })
 }
