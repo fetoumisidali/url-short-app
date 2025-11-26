@@ -20,14 +20,4 @@ public class UrlShorterApplication {
 
 
 
-	@Bean
-	CommandLineRunner init(@Value("${spring.data.mongodb.uri}") String mongoUri) {
-		return args -> {
-			System.out.println("=================================");
-			System.out.println("📊 MongoDB URI from config: " + mongoUri);
-			System.out.println("=================================");
-		};
-	}
-
-
 }

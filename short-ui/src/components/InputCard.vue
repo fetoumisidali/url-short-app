@@ -1,15 +1,15 @@
 <template>
     <form @submit.prevent="handleSubmit">
-        <div class="p-8 mb-8 rounded-lg border border-blue-500">
+        <UCard class="p-2 mb-8 border border-blue-400">
             <div class="flex gap-3">
-                <input v-model="form.url" type="text" placeholder="Enter you URL here"
-                    class=" h-14 w-full px-3 py-2 rounded-md border border-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                <button type="submit"
-                    class="text-white font-medium bg-blue-500 rounded-lg h-14 px-8 text-lg not-disabled:cursor-pointer hover:opacity-90 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
+                <UInput color="secondary" v-model="form.url" type="text" placeholder="Enter you URL here" class="w-full"
+                    :ui="{ base: 'h-14 px-3 py-2' }" />
+                <UButton color="secondary" type="submit" class="px-8 text-lg"
+                    :loading="createShortUrlMutation.isPending.value" trailing>
                     Short
-                </button>
+                </UButton>
             </div>
-        </div>
+        </UCard>
     </form>
 
 </template>
@@ -19,18 +19,33 @@ import { reactive } from 'vue';
 import { useCreateShortUrl } from '../query/url.query';
 import { useShortUrlStore } from '../stores/url.store';
 
-const { addUrl ,getExistOriginalUrl } = useShortUrlStore()
+const { addUrl, getExistOriginalUrl } = useShortUrlStore()
 
 const form = reactive({
     url: ''
 })
 
 const createShortUrlMutation = useCreateShortUrl()
+const toast = useToast()
 
 function handleSubmit() {
-    if(getExistOriginalUrl(form.url)) return;
+    if (getExistOriginalUrl(form.url)) {
+        toast.add({
+            title:"Url already exists",
+            description:"the url you enter is already exists",
+            icon:"i-lucide-info",
+            color:"info"
+        })
+        return;
+    };
     createShortUrlMutation.mutate(form, {
         onError: (error) => {
+            toast.add({
+                title: 'Something went wrong',
+                description: "please try again later",
+                icon:"i-lucide-shield-x",
+                color:"error"
+            })
             console.log(error)
             console.log(error.message)
             console.log("something wrong")
@@ -42,6 +57,11 @@ function handleSubmit() {
                 form.url
             )
             form.url = ''
+            toast.add({
+                title:"Success",
+                description:"Your short url has been created successfully",
+                icon:"i-lucide-badge-check",
+            })
         }
     })
 }
