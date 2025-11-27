@@ -14,6 +14,8 @@ declare module 'vue' {
     Header: typeof import('./src/components/Header.vue')['default']
     InputCard: typeof import('./src/components/InputCard.vue')['default']
     LinkItem: typeof import('./src/components/LinkItem.vue')['default']
+    LinksTable: typeof import('./src/components/admin/LinksTable.vue')['default']
+    Navbar: typeof import('./src/components/admin/Navbar.vue')['default']
     NoLinksCard: typeof import('./src/components/NoLinksCard.vue')['default']
     RecentLinks: typeof import('./src/components/RecentLinks.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
@@ -22,8 +24,10 @@ declare module 'vue' {
     UApp: typeof import('./node_modules/@nuxt/ui/dist/runtime/components/App.vue')['default']
     UButton: typeof import('./node_modules/@nuxt/ui/dist/runtime/components/Button.vue')['default']
     UCard: typeof import('./node_modules/@nuxt/ui/dist/runtime/components/Card.vue')['default']
+    UHeader: typeof import('./node_modules/@nuxt/ui/dist/runtime/components/Header.vue')['default']
     UIcon: typeof import('./node_modules/@nuxt/ui/dist/runtime/vue/components/Icon.vue')['default']
     UInput: typeof import('./node_modules/@nuxt/ui/dist/runtime/components/Input.vue')['default']
     ULink: typeof import('./node_modules/@nuxt/ui/dist/runtime/vue/components/Link.vue')['default']
+    UTable: typeof import('./node_modules/@nuxt/ui/dist/runtime/components/Table.vue')['default']
   }
 }

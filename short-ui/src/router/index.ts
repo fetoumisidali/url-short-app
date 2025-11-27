@@ -10,6 +10,11 @@ const routes: RouteRecordRaw[] = [
     name: "home",
     component: () => import("../views/HomeView.vue"),
   },
+  {
+    path: "/admin-dashboard",
+    name: "admin-dashboard",
+    component: () => import("../views/AdminDashboardView.vue"),
+  }
 ];
 
 const router = createRouter({

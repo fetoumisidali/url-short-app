@@ -10,3 +10,10 @@ export interface Url {
     originalUrl:string,
     shortUrl:string
 }
+
+export interface DatabaseUrl{
+    id:string,
+    longUrl:string,
+    shortId:string,
+    createdAt: string
+}
