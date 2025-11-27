@@ -1,4 +1,4 @@
-import { reactive } from "vue";
+import { computed, reactive } from "vue";
 import { useShortUrlStore } from "../stores/url.store";
 import { urlSchema, type UrlFormData } from "../schema/url.schema";
 import { useCreateShortUrl } from "../query/url.query";
@@ -6,23 +6,27 @@ import { useCreateShortUrl } from "../query/url.query";
 export const useUrlForm = () => {
   const { addUrl, getExistOriginalUrl } = useShortUrlStore();
   const { mutate, isPending } = useCreateShortUrl();
+
   const toast = useToast();
 
   const form = reactive<UrlFormData>({
     url: "",
   });
+  const isValid = computed(() => {
+    return urlSchema.safeParse(form).success;
+});
 
   function handleSubmit() {
-    const result = urlSchema.safeParse(form);
-    if (!result.success) {
-      toast.add({
-        title: "Invalid URL",
-        description: "please enter a valid url",
-        icon: "i-lucide-alert-circle",
-        color: "error",
-      });
-      return;
-    }
+    // const result = urlSchema.safeParse(form);
+    // if (!result.success) {
+    //   toast.add({
+    //     title: "Invalid URL",
+    //     description: "please enter a valid url",
+    //     icon: "i-lucide-alert-circle",
+    //     color: "error",
+    //   });
+    //   return;
+    // }
     if (getExistOriginalUrl(form.url)) {
       toast.add({
         title: "Url already exists",
@@ -57,5 +61,6 @@ export const useUrlForm = () => {
     form,
     handleSubmit,
     isPending,
+    isValid
   };
 };
