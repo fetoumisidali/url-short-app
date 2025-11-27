@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/vue-query";
 import { login } from "../api/auth.api";
 import { AuthStore } from "../stores/auth.store";
 import { useRouter } from "vue-router";
+import { useToast } from "@nuxt/ui/runtime/composables/useToast.js";
 
 export const useLogin = () => {
   const router = useRouter();
