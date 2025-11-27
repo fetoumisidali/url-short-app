@@ -1,5 +1,14 @@
 <script setup lang="ts">
+import { useRouter } from 'vue-router';
+import { AuthStore } from '../../stores/auth.store';
 
+
+    const authStore = AuthStore()
+    const router = useRouter()
+    function handleLogout(){
+        authStore.logout()
+        router.push({name:'home'})
+    }
 </script>
 
 <template>
@@ -14,10 +23,11 @@
             </template>
 
             <template #right>
-                <UButton class="py-2 px-4">
+                <UButton @click="handleLogout" class="py-2 px-4">
                     Logout
                 </UButton>
             </template>
         </UHeader>
     </div>
 </template>
+
